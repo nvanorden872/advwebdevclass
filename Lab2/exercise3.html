@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Exercise 3 - Selectors, DOM, and CSS</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        .box {
+            padding: 15px;
+            border: 1px solid black;
+            margin-bottom: 15px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 8px;
+        }
+
+        #image {
+            width: 200px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+
+            // Select by ID
+            $("#idButton").click(function() {
+                $("#heading").css("color", "blue");
+            });
+
+            // Select by class
+            $("#classButton").click(function() {
+                $(".special").css("background-color", "yellow");
+            });
+
+            // Select by element type
+            $("#paragraphButton").click(function() {
+                $("p").css("font-size", "20px");
+            });
+
+            // Read text
+            $("#readText").click(function() {
+                let text = $("#paragraph1").text();
+                $("#output").text("Text: " + text);
+            });
+
+            // Read HTML
+            $("#readHTML").click(function() {
+                let html = $("#paragraph1").html();
+                $("#output").text("HTML: " + html);
+            });
+
+            // Change text
+            $("#changeText").click(function() {
+                $("#paragraph1").text("The paragraph text has been changed.");
+            });
+
+            // Change HTML
+            $("#changeHTML").click(function() {
+                $("#paragraph1").html("<strong>The HTML content has been changed.</strong>");
+            });
+
+            // Read attribute
+            $("#readAttribute").click(function() {
+                let value = $("#myLink").attr("href");
+                $("#output").text("Link: " + value);
+            });
+
+            // Change attribute
+            $("#changeAttribute").click(function() {
+                $("#myLink").attr("href", "https://www.google.com");
+                $("#myLink").text("Go to Google");
+            });
+
+            // Hide
+            $("#hideButton").click(function() {
+                $("#box").hide();
+            });
+
+            // Show
+            $("#showButton").click(function() {
+                $("#box").show();
+            });
+
+            // Toggle
+            $("#toggleButton").click(function() {
+                $("#box").toggle();
+            });
+
+            // CSS
+            $("#cssButton").click(function() {
+                $("#box").css({
+                    "background-color": "lightblue",
+                    "color": "darkblue",
+                    "font-size": "20px",
+                    "border": "3px solid black",
+                    "width": "400px"
+                });
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <h1 id="heading">jQuery Selectors and DOM</h1>
+
+    <div id="box" class="box">
+
+        <p id="paragraph1">
+            This is a paragraph with <strong>HTML content</strong>.
+        </p>
+
+        <p class="special">This paragraph uses a class.</p>
+
+        <p class="special">This is another paragraph using the class.</p>
+
+        <ul>
+            <li>Item One</li>
+            <li>Item Two</li>
+            <li>Item Three</li>
+        </ul>
+
+    </div>
+
+    <a id="myLink" href="https://www.example.com">Example Link</a>
+
+    <p id="output"></p>
+
+    <button id="idButton" type="button">Select by ID</button>
+    <button id="classButton" type="button">Select by Class</button>
+    <button id="paragraphButton" type="button">Select Paragraphs</button>
+
+    <br>
+
+    <button id="readText" type="button">Read Text</button>
+    <button id="readHTML" type="button">Read HTML</button>
+    <button id="changeText" type="button">Change Text</button>
+    <button id="changeHTML" type="button">Change HTML</button>
+
+    <br>
+
+    <button id="readAttribute" type="button">Read Attribute</button>
+    <button id="changeAttribute" type="button">Change Attribute</button>
+
+    <br>
+
+    <button id="hideButton" type="button">Hide</button>
+    <button id="showButton" type="button">Show</button>
+    <button id="toggleButton" type="button">Toggle</button>
+
+    <br>
+
+    <button id="cssButton" type="button">Change CSS</button>
+</body>
+</html>

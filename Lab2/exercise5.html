@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exercise 5 - jQuery Effects</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        #box {
+            width: 300px;
+            height: 150px;
+            background-color: lightblue;
+            border: 2px solid black;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+
+            $("#hideButton").click(function() {
+                $("#box").hide();
+            });
+
+            $("#showButton").click(function() {
+                $("#box").show();
+            });
+
+            $("#toggleButton").click(function() {
+                $("#box").toggle();
+            });
+
+            $("#fadeButton").click(function() {
+                $("#box").fadeToggle();
+            });
+
+            $("#slideButton").click(function() {
+                $("#box").slideToggle();
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <h1>jQuery Visual Effects</h1>
+
+    <button id="hideButton">Hide</button>
+    <button id="showButton">Show</button>
+    <button id="toggleButton">Toggle</button>
+    <button id="fadeButton">Fade</button>
+    <button id="slideButton">Slide</button>
+
+    <div id="box">
+        This box demonstrates jQuery visual effects.
+    </div>
+
+</body>
+</html>

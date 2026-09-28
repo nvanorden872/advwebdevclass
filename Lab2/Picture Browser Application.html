@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exercise 7 - Picture Browser</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin: 30px;
+        }
+
+        #picture {
+            width: 500px;
+            height: 300px;
+            object-fit: cover;
+            border: 2px solid black;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+        }
+
+        #caption {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+
+            let pictures = [
+                {
+                    url: "images/image1.jpg",
+                    caption: "Picture One"
+                },
+                {
+                    url: "images/image2.jpg",
+                    caption: "Picture Two"
+                },
+                {
+                    url: "images/image3.jpg",
+                    caption: "Picture Three"
+                },
+                {
+                    url: "images/image4.jpg",
+                    caption: "Picture Four"
+                },
+            ];
+
+            let current = 0;
+
+            function displayPicture() {
+
+                $("#picture").fadeOut(200, function() {
+
+                    $("#picture").attr("src", pictures[current].url);
+
+                    $("#caption").text(pictures[current].caption);
+
+                    $("#counter").text(
+                        "Picture " + (current + 1) +
+                        " of " + pictures.length
+                    );
+
+                    $("#picture").fadeIn(200);
+
+                });
+            }
+
+            $("#next").click(function() {
+
+                current++;
+
+                if (current >= pictures.length) {
+                    current = 0;
+                }
+
+                displayPicture();
+            });
+
+            $("#picture").on("error", function() {
+                $("#caption").text("Unable to load this image.");
+            });
+
+            displayPicture();
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <h1>Picture Browser</h1>
+
+    <img id="picture" src="" alt="Picture">
+
+    <p id="caption"></p>
+
+    <p id="counter"></p>
+
+    <button id="next">Next Picture</button>
+
+    <p>
+        Images used with permission/appropriate attribution.
+    </p>
+
+</body>
+</html>

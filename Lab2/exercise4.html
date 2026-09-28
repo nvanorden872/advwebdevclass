@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exercise 4 - Table Selection</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 600px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: lightgray;
+        }
+
+        button {
+            margin: 10px 5px;
+            padding: 8px;
+        }
+
+        .oddRow {
+            background-color: lightblue;
+            font-style: italic;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+
+            // Style odd rows
+            $("table tr:odd").addClass("oddRow");
+
+            // Hide odd rows
+            $("#hideOdd").click(function() {
+                $("table tr:odd").hide();
+            });
+
+            // Restore odd rows
+            $("#showOdd").click(function() {
+                $("table tr:odd").show();
+            });
+
+            // Hide clicked row
+            $("table tr").click(function() {
+                $(this).hide();
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <h1>Table Selection and Events</h1>
+
+    <button id="hideOdd">Hide Odd Rows</button>
+    <button id="showOdd">Restore Odd Rows</button>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Major</th>
+            <th>Year</th>
+        </tr>
+
+        <tr>
+            <td>John</td>
+            <td>Information Technology</td>
+            <td>Freshman</td>
+        </tr>
+
+        <tr>
+            <td>Sarah</td>
+            <td>Cybersecurity</td>
+            <td>Sophomore</td>
+        </tr>
+
+        <tr>
+            <td>Mike</td>
+            <td>Computer Science</td>
+            <td>Junior</td>
+        </tr>
+
+        <tr>
+            <td>Lisa</td>
+            <td>Information Technology</td>
+            <td>Senior</td>
+        </tr>
+
+        <tr>
+            <td>David</td>
+            <td>Cybersecurity</td>
+            <td>Junior</td>
+        </tr>
+
+</table>
+
+<p>Click any row to hide that row.</p>
+
+</body>
+</html>
