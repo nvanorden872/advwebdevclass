@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Library Book</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .book {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .cover {
+            width: 250px;
+        }
+
+        .cover img {
+            max-width: 100%;
+        }
+
+        .info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .info p {
+            line-height: 1.5;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        a {
+            color: #0645ad;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Open Library Book Information</h1>
+
+    <div id="book">
+        Loading book information...
+    </div>
+
+</div>
+
+<script>
+$(document).ready(function() {
+
+    $.getJSON("openlibrary-book.json", function(data) {
+
+        let title = data.title || "Not available";
+
+        let publishers = "Not available";
+
+        if (data.publishers && data.publishers.length > 0) {
+            publishers = data.publishers.join(", ");
+        }
+
+        let authors = "Not available";
+
+        if (data.authors && data.authors.length > 0) {
+            authors = "";
+
+            data.authors.forEach(function(author, index) {
+
+                if (index > 0) {
+                    authors += ", ";
+                }
+
+                if (author.key) {
+                    authors += author.key;
+                } else {
+                    authors += "Not available";
+                }
+            });
+        }
+
+        let isbn10 = "Not available";
+
+        if (data.isbn_10 && data.isbn_10.length > 0) {
+            isbn10 = data.isbn_10.join(", ");
+        }
+
+        let isbn13 = "Not available";
+
+        if (data.isbn_13 && data.isbn_13.length > 0) {
+            isbn13 = data.isbn_13.join(", ");
+        }
+
+        let covers = "Not available";
+
+        if (data.covers && data.covers.length > 0) {
+            covers = data.covers.join(", ");
+        }
+
+        let firstSentence = "Not available";
+
+        if (data.first_sentence && data.first_sentence.value) {
+            firstSentence = data.first_sentence.value;
+        }
+
+        let contributions = "Not available";
+
+        if (data.contributions && data.contributions.length > 0) {
+            contributions = data.contributions.join(", ");
+        }
+
+        let languages = "Not available";
+
+        if (data.languages && data.languages.length > 0) {
+
+            languages = "";
+
+            data.languages.forEach(function(language, index) {
+
+                if (index > 0) {
+                    languages += ", ";
+                }
+
+                if (language.key) {
+                    languages += language.key.replace("/languages/", "");
+                }
+            });
+        }
+
+        let works = "Not available";
+
+        if (data.works && data.works.length > 0) {
+
+            works = "";
+
+            data.works.forEach(function(work, index) {
+
+                if (index > 0) {
+                    works += ", ";
+                }
+
+                works += work.key;
+            });
+        }
+
+        let coverHtml = "";
+
+        if (data.covers && data.covers.length > 0) {
+
+            let coverId = data.covers[0];
+
+            if (coverId > 0) {
+
+                let coverUrl =
+                    "https://covers.openlibrary.org/b/id/" +
+                    coverId +
+                    "-L.jpg";
+
+                coverHtml =
+                    '<img src="' +
+                    coverUrl +
+                    '" alt="Cover of ' +
+                    title.replace(/"/g, "&quot;") +
+                    '">';
+
+            } else {
+                coverHtml = "<p>Cover image not available.</p>";
+            }
+
+        } else {
+            coverHtml = "<p>Cover image not available.</p>";
+        }
+
+        let bookUrl = "https://openlibrary.org" + data.key;
+
+        $("#book").html(
+
+            '<div class="book">' +
+
+                '<div class="cover">' +
+                    coverHtml +
+                '</div>' +
+
+                '<div class="info">' +
+
+                    '<h2>' + title + '</h2>' +
+
+                    '<p>' +
+                        '<span class="label">Author Reference:</span> ' +
+                        authors +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">Publisher:</span> ' +
+                        publishers +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">Publication Date:</span> ' +
+                        (data.publish_date || "Not available") +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">Page Count:</span> ' +
+                        (data.number_of_pages || "Not available") +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">ISBN-10:</span> ' +
+                        isbn10 +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">ISBN-13:</span> ' +
+                        isbn13 +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">First Sentence:</span> ' +
+                        firstSentence +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">Illustrator:</span> ' +
+                        contributions +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">Language:</span> ' +
+                        languages +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">Work:</span> ' +
+                        works +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">Goodreads ID:</span> ' +
+                        (data.identifiers &&
+                         data.identifiers.goodreads
+                         ? data.identifiers.goodreads.join(", ")
+                         : "Not available") +
+                    '</p>' +
+
+                    '<p>' +
+                        '<span class="label">LibraryThing ID:</span> ' +
+                        (data.identifiers &&
+                         data.identifiers.librarything
+                         ? data.identifiers.librarything.join(", ")
+                         : "Not available") +
+                    '</p>' +
+
+                    '<p>' +
+                        '<a href="' + bookUrl + '" target="_blank">' +
+                        'View this edition on Open Library' +
+                        '</a>' +
+                    '</p>' +
+
+                '</div>' +
+
+            '</div>'
+        );
+
+    }).fail(function() {
+
+        $("#book").html(
+            "<p>Unable to load the book JSON file.</p>"
+        );
+
+    });
+
+});
+</script>
+
+</body>
+</html>
