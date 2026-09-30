@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Exercise 3 - Reading JSON</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        .book {
+            border: 1px solid black;
+            padding: 15px;
+            margin: 10px 0;
+        }
+    </style>
+
+    <script>
+
+        let books = [
+            {
+                "title": "Web Development Basics",
+                "author": "Maya Lee",
+                "price": 29.99
+            },
+            {
+                "title": "Modern JavaScript",
+                "author": "Daniel Kim",
+                "price": 34.50
+            },
+            {
+                "title": "Understanding JSON",
+                "author": "Sofia Patel",
+                "price": 24.95
+            }
+        ];
+
+        $(document).ready(function() {
+
+            // Display first book
+            $("#firstBook").html(
+                "<h2>First Book</h2>" +
+                "<p>Title: " + books[0].title + "</p>" +
+                "<p>Author: " + books[0].author + "</p>" +
+                "<p>Price: $" + books[0].price + "</p>"
+            );
+
+            // Display all books
+            for (let i = 0; i < books.length; i++) {
+
+                $("#books").append(
+                    "<div class='book'>" +
+                    "<h2>" + books[i].title + "</h2>" +
+                    "<p>Author: " + books[i].author + "</p>" +
+                    "<p>Price: $" + books[i].price + "</p>" +
+                    "</div>"
+                );
+
+            }
+
+            // Display number of books
+            $("#numberOfBooks").text(
+                "Total number of books: " + books.length
+            );
+
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <h1>Reading JSON Values</h1>
+
+    <div id="firstBook"></div>
+
+    <h2>All Books</h2>
+
+    <div id="books"></div>
+
+    <p id="numberOfBooks"></p>
+
+</body>
+</html>

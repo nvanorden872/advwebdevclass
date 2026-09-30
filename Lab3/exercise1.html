@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Exercise 1 - JSON Structure</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        .section {
+            border: 1px solid black;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        code {
+            background-color: #eee;
+            padding: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Exercise 1: JSON Structure Exploration</h1>
+
+    <div class="section">
+        <h2>Main Structure</h2>
+        <p>
+            The Open Library book data is organized as a JSON object.
+            The object contains name/value pairs that describe the book.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Name/Value Pair</h2>
+
+        <p>
+            An example of a name/value pair is:
+        </p>
+
+        <code>"title": "Harry Potter..."</code>
+
+        <p>
+            The name is "title" and the value contains the book title.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Object</h2>
+
+        <p>
+            A JSON object is surrounded by curly brackets.
+        </p>
+
+        <pre>
+{
+    "title": "Example Book",
+    "publish_date": "2020"
+}
+        </pre>
+    </div>
+
+    <div class="section">
+        <h2>Array</h2>
+
+        <p>
+            Arrays contain collections of values and are surrounded by
+            square brackets.
+        </p>
+
+        <pre>
+[
+    "Publisher One",
+    "Publisher Two",
+    "Publisher Three"
+]
+        </pre>
+    </div>
+
+    <div class="section">
+        <h2>Nested Structure</h2>
+
+        <p>
+            JSON can contain objects inside other objects and arrays
+            inside objects. This allows more complicated information
+            to be organized together.
+        </p>
+
+        <pre>
+{
+    "book": {
+        "title": "Example",
+        "authors": [
+            {
+                "name": "John Smith"
+            }
+        ]
+    }
+}
+        </pre>
+    </div>
+
+    <div class="section">
+        <h2>Overall Organization</h2>
+
+        <p>
+            The JSON is organized as one main object containing
+            information about a book. Some properties contain simple
+            values, while others contain arrays or additional objects.
+            This allows related information to be grouped together.
+        </p>
+    </div>
+
+</body>
+</html>

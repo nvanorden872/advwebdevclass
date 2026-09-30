@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Exercise 4 - Nested JSON</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        .student {
+            border: 1px solid black;
+            padding: 20px;
+            width: 500px;
+        }
+
+        .course {
+            background-color: #eee;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+
+    <script>
+
+        let student = {
+            "name": "Nuh Van Orden",
+            "major": "Information Technology",
+            "email": "student@example.com",
+
+            "courses": [
+                {
+                    "code": "IT1114",
+                    "title": "Introduction to Information Technology",
+                    "credits": 3
+                },
+                {
+                    "code": "IT3203",
+                    "title": "Web Development",
+                    "credits": 3
+                },
+                {
+                    "code": "IT4883",
+                    "title": "Infrastructure Defense",
+                    "credits": 3
+                }
+            ]
+        };
+
+        $(document).ready(function() {
+
+            $("#studentName").text(student.name);
+
+            $("#major").text(student.major);
+
+            $("#email").text(student.email);
+
+            for (let i = 0; i < student.courses.length; i++) {
+
+                $("#courses").append(
+                    "<div class='course'>" +
+                    "<strong>Course Code:</strong> " +
+                    student.courses[i].code +
+                    "<br>" +
+                    "<strong>Course Title:</strong> " +
+                    student.courses[i].title +
+                    "<br>" +
+                    "<strong>Credit Hours:</strong> " +
+                    student.courses[i].credits +
+                    "</div>"
+                );
+
+            }
+
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <h1>Student Information</h1>
+
+    <div class="student">
+
+        <p>
+            <strong>Name:</strong>
+            <span id="studentName"></span>
+        </p>
+
+        <p>
+            <strong>Major:</strong>
+            <span id="major"></span>
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            <span id="email"></span>
+        </p>
+
+        <h2>Courses</h2>
+
+        <div id="courses"></div>
+
+    </div>
+
+</body>
+</html>

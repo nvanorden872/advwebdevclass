@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Exercise 5 - Weather JSON</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+        }
+
+        #weather {
+            border: 1px solid black;
+            padding: 20px;
+            width: 400px;
+        }
+
+        h1 {
+            color: darkblue;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+
+            $.getJSON("weather.json", function(data) {
+
+                $("#city").text(data.name);
+
+                $("#country").text(data.sys.country);
+
+                $("#temperature").text(data.main.temp);
+
+                $("#conditions").text(data.weather[0].description);
+
+                $("#humidity").text(data.main.humidity);
+
+                $("#wind").text(data.wind.speed);
+
+                $("#clouds").text(data.clouds.all);
+
+                $("#latitude").text(data.coord.lat);
+
+                $("#longitude").text(data.coord.lon);
+
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <h1>Weather Information</h1>
+
+    <div id="weather">
+
+        <p>
+            <strong>City:</strong>
+            <span id="city"></span>
+        </p>
+
+        <p>
+            <strong>Country:</strong>
+            <span id="country"></span>
+        </p>
+
+        <p>
+            <strong>Temperature:</strong>
+            <span id="temperature"></span> K
+        </p>
+
+        <p>
+            <strong>Conditions:</strong>
+            <span id="conditions"></span>
+        </p>
+
+        <p>
+            <strong>Humidity:</strong>
+            <span id="humidity"></span>%
+        </p>
+
+        <p>
+            <strong>Wind Speed:</strong>
+            <span id="wind"></span> m/s
+        </p>
+
+        <p>
+            <strong>Cloud Coverage:</strong>
+            <span id="clouds"></span>%
+        </p>
+
+        <p>
+            <strong>Latitude:</strong>
+            <span id="latitude"></span>
+        </p>
+
+        <p>
+            <strong>Longitude:</strong>
+            <span id="longitude"></span>
+        </p>
+
+    </div>
+
+</body>
+</html>

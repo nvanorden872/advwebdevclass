@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Exercise 6 - Movie Information</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 30px;
+            background-color: #f4f4f4;
+        }
+
+        #movie {
+            background-color: white;
+            border: 1px solid black;
+            padding: 25px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            color: darkblue;
+        }
+
+        h2 {
+            border-bottom: 1px solid gray;
+            padding-bottom: 5px;
+        }
+
+        .genre {
+            display: inline-block;
+            background-color: #ddd;
+            padding: 5px 10px;
+            margin: 3px;
+        }
+
+        .cast {
+            margin: 8px 0;
+        }
+
+        #poster {
+            width: 200px;
+            display: block;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+
+            $.getJSON("movie.json", function(data) {
+
+                // Basic movie information
+                $("#title").text(data.title);
+
+                $("#year").text(data.year);
+
+                $("#rating").text(data.mpaa_rating);
+
+                $("#runtime").text(data.runtime);
+
+                $("#studio").text(data.studio);
+
+                // Description
+                $("#consensus").text(data.critics_consensus);
+
+                $("#synopsis").text(data.synopsis);
+
+                // Release dates
+                $("#theater").text(data.release_dates.theater);
+
+                $("#dvd").text(data.release_dates.dvd);
+
+                // Ratings
+                $("#criticsRating").text(data.ratings.critics_rating);
+
+                $("#criticsScore").text(data.ratings.critics_score);
+
+                $("#audienceRating").text(data.ratings.audience_rating);
+
+                $("#audienceScore").text(data.ratings.audience_score);
+
+                // Poster
+                $("#poster").attr("src", data.posters.original);
+
+                // Genres
+                for (let i = 0; i < data.genres.length; i++) {
+
+                    $("#genres").append(
+                        "<span class='genre'>" +
+                        data.genres[i] +
+                        "</span>"
+                    );
+
+                }
+
+                // Cast
+                for (let i = 0; i < data.abridged_cast.length; i++) {
+
+                    $("#cast").append(
+                        "<div class='cast'>" +
+                        "<strong>" +
+                        data.abridged_cast[i].name +
+                        "</strong> - " +
+                        data.abridged_cast[i].characters.join(", ") +
+                        "</div>"
+                    );
+
+                }
+
+                // Directors
+                for (let i = 0; i < data.abridged_directors.length; i++) {
+
+                    $("#directors").append(
+                        "<p>" +
+                        data.abridged_directors[i].name +
+                        "</p>"
+                    );
+
+                }
+
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <div id="movie">
+
+        <h1 id="title">Movie Information</h1>
+
+        <p>
+            <strong>Year:</strong>
+            <span id="year"></span>
+        </p>
+
+        <p>
+            <strong>MPAA Rating:</strong>
+            <span id="rating"></span>
+        </p>
+
+        <p>
+            <strong>Runtime:</strong>
+            <span id="runtime"></span> minutes
+        </p>
+
+        <p>
+            <strong>Studio:</strong>
+            <span id="studio"></span>
+        </p>
+
+        <h2>Genres</h2>
+
+        <div id="genres"></div>
+
+        <h2>Critics Consensus</h2>
+
+        <p id="consensus"></p>
+
+        <h2>Synopsis</h2>
+
+        <p id="synopsis"></p>
+
+        <h2>Release Dates</h2>
+
+        <p>
+            <strong>Theater:</strong>
+            <span id="theater"></span>
+        </p>
+
+        <p>
+            <strong>DVD:</strong>
+            <span id="dvd"></span>
+        </p>
+
+        <h2>Ratings</h2>
+
+        <p>
+            <strong>Critics Rating:</strong>
+            <span id="criticsRating"></span>
+        </p>
+
+        <p>
+            <strong>Critics Score:</strong>
+            <span id="criticsScore"></span>%
+        </p>
+
+        <p>
+            <strong>Audience Rating:</strong>
+            <span id="audienceRating"></span>
+        </p>
+
+        <p>
+            <strong>Audience Score:</strong>
+            <span id="audienceScore"></span>%
+        </p>
+
+        <h2>Cast</h2>
+
+        <div id="cast"></div>
+
+        <h2>Director</h2>
+
+        <div id="directors"></div>
+
+    </div>
+
+</body>
+</html>
