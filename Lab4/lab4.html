@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4 - User and Albums</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1>User Information</h1>
+        <div id="user">Loading user information...</div>
+
+        <h2>Albums</h2>
+        <p>Select an album to view its photos.</p>
+        <ul id="albums"></ul>
+    </main>
+
+    <script>
+        const userId = 1;
+
+        async function loadUser() {
+            try {
+                const response = await fetch(
+                    `https://jsonplaceholder.typicode.com/users/${userId}`
+                );
+                const user = await response.json();
+
+                document.getElementById("user").innerHTML = `
+                    <div class="user-card">
+                        <p><strong>Name:</strong> ${user.name}</p>
+                        <p><strong>Username:</strong> ${user.username}</p>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Address:</strong>
+                            ${user.address.street}, ${user.address.suite},
+                            ${user.address.city}, ${user.address.zipcode}
+                        </p>
+                        <p><strong>Phone:</strong> ${user.phone}</p>
+                        <p><strong>Website:</strong>
+                            <a href="https://${user.website}" target="_blank">
+                                ${user.website}
+                            </a>
+                        </p>
+                        <p><strong>Company:</strong> ${user.company.name}</p>
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById("user").textContent =
+                    "Unable to load user information.";
+            }
+        }
+
+        async function loadAlbums() {
+            try {
+                const response = await fetch(
+                    `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
+                );
+                const albums = await response.json();
+                const albumList = document.getElementById("albums");
+
+                albums.forEach(album => {
+                    const li = document.createElement("li");
+                    const link = document.createElement("a");
+
+                    link.href = `page2.html?albumId=${album.id}`;
+                    link.textContent = album.title;
+
+                    li.appendChild(link);
+                    albumList.appendChild(li);
+                });
+            } catch (error) {
+                document.getElementById("albums").textContent =
+                    "Unable to load albums.";
+            }
+        }
+
+        loadUser();
+        loadAlbums();
+    </script>
+</body>
+</html>
