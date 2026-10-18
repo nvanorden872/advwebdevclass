@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details | BookFinder</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav>
+            <a class="brand" href="homepage.html">BookFinder</a>
+            <a href="../index.html">Home</a>
+            <a href="bookshelf.html">My Bookshelf</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <a class="back-link" href="index.html">← Back to search</a>
+        <div id="bookDetails" class="details-panel">
+            <p>Loading book details...</p>
+        </div>
+    </main>
+
+    <footer>BookFinder · Powered by Open Library</footer>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const workId = params.get("workId");
+        const details = document.getElementById("bookDetails");
+
+        async function loadDetails() {
+            if (!workId || !/^OL\d+W$/.test(workId)) {
+                details.textContent = "A valid book Work ID was not provided.";
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `https://openlibrary.org/works/${encodeURIComponent(workId)}.json`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Book not found.");
+                }
+
+                const book = await response.json();
+                details.replaceChildren();
+
+                const layout = document.createElement("div");
+                layout.className = "details-layout";
+
+                const cover = document.createElement("img");
+                cover.className = "details-cover";
+                cover.alt = "Cover of " + (book.title || "Untitled");
+                cover.src = book.covers?.find(id => id > 0)
+                    ? `https://covers.openlibrary.org/b/id/${book.covers.find(id => id > 0)}-M.jpg`
+                    : "https://placehold.co/240x360/f0ece4/555?text=No+Cover";
+
+                const info = document.createElement("div");
+
+                const heading = document.createElement("h1");
+                heading.textContent = book.title || "Title unavailable";
+
+                const id = document.createElement("p");
+                id.textContent = "Work ID: " + workId;
+
+                const description = document.createElement("p");
+                const descriptionValue = typeof book.description === "string"
+                    ? book.description
+                    : book.description?.value;
+
+                description.textContent = descriptionValue ||
+                    "No description is available for this book.";
+
+                const subjectHeading = document.createElement("h2");
+                subjectHeading.textContent = "Subjects";
+
+                const subjectList = document.createElement("ul");
+                const subjects = (book.subjects || []).slice(0, 10);
+
+                if (subjects.length) {
+                    subjects.forEach(subject => {
+                        const item = document.createElement("li");
+                        item.textContent = subject;
+                        subjectList.append(item);
+                    });
+                } else {
+                    const item = document.createElement("li");
+                    item.textContent = "No subjects available.";
+                    subjectList.append(item);
+                }
+
+                const externalLink = document.createElement("a");
+                externalLink.href = `https://openlibrary.org/works/${workId}`;
+                externalLink.textContent = "View on Open Library";
+                externalLink.target = "_blank";
+                externalLink.rel = "noopener noreferrer";
+                externalLink.className = "button-link";
+
+                info.append(
+                    heading, id, description,
+                    subjectHeading, subjectList, externalLink
+                );
+
+                layout.append(cover, info);
+                details.append(layout);
+            } catch (error) {
+                details.textContent =
+                    "Unable to load this book. Return to Home and try again.";
+                console.error(error);
+            }
+        }
+
+        loadDetails();
+    </script>
+</body>
+</html>

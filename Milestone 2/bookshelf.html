@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookshelf | BookFinder</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav>
+            <a class="brand" href="homepage.html">BookFinder</a>
+            <a href="../index.html">Home</a>
+            <a href="bookshelf.html" aria-current="page">My Bookshelf</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="page-intro">
+            <p class="eyebrow">YOUR COLLECTION</p>
+            <h1>My Bookshelf</h1>
+            <p>A collection of books selected from Open Library.</p>
+        </section>
+
+        <p id="status" role="status">Loading your bookshelf...</p>
+        <div id="books" class="book-grid"></div>
+    </main>
+
+    <footer>BookFinder · Powered by Open Library</footer>
+
+    <script>
+        // Selected Open Library Work IDs.
+        const bookshelfIds = [
+            "OL27448W",
+            "OL82563W",
+            "OL262758W",
+            "OL15804W",
+            "OL179245W"
+        ];
+
+        const booksDiv = document.getElementById("books");
+        const status = document.getElementById("status");
+
+        async function loadBookshelf() {
+            let loaded = 0;
+
+            const requests = bookshelfIds.map(async workId => {
+                try {
+                    const response = await fetch(
+                        `https://openlibrary.org/works/${workId}.json`
+                    );
+
+                    if (!response.ok) {
+                        throw new Error("Book request failed");
+                    }
+
+                    const book = await response.json();
+                    const card = document.createElement("article");
+                    card.className = "book-card";
+
+                    const cover = document.createElement("img");
+                    cover.className = "book-cover";
+                    cover.alt = "Cover of " + (book.title || "Untitled");
+                    cover.loading = "lazy";
+                    cover.src = book.covers?.find(id => id > 0)
+                        ? `https://covers.openlibrary.org/b/id/${book.covers.find(id => id > 0)}-S.jpg`
+                        : "https://placehold.co/120x180/f0ece4/555?text=No+Cover";
+
+                    const info = document.createElement("div");
+                    info.className = "book-info";
+
+                    const title = document.createElement("a");
+                    title.className = "book-title";
+                    title.textContent = book.title || "Title unavailable";
+                    title.href = `details.html?workId=${encodeURIComponent(workId)}`;
+
+                    const id = document.createElement("p");
+                    id.textContent = "Work ID: " + workId;
+
+                    info.append(title, id);
+                    card.append(cover, info);
+                    booksDiv.append(card);
+                    loaded++;
+                } catch (error) {
+                    console.error(`Could not load ${workId}:`, error);
+                }
+            });
+
+            await Promise.all(requests);
+
+            status.textContent = loaded === bookshelfIds.length
+                ? `Your bookshelf contains ${loaded} books.`
+                : `Loaded ${loaded} of ${bookshelfIds.length} books. Some records may be unavailable.`;
+        }
+
+        loadBookshelf();
+    </script>
+</body>
+</html>
